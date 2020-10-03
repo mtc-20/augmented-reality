@@ -1,12 +1,21 @@
 # Augmented Reality
 ***A basic augmented reality card based application in Python. This is a fork of [juangallostra's repo](https://github.com/juangallostra/augmented-reality).***
 
+<div style="text-align:center" alt="A 3D model of a wolf on a Robotics club logo">
+<img src="./output.gif">
+
+
+<em style="text-align:center">A sample output</em>
+</div>
+
 ## A Brief History
 
 When I first started learning OpenCV/Computer Vision and was looking for ideas to implement and/or implement OpenCV, I made the connection to Augmented Reality. And AR is something that has always fascinated me. So, when I realised I was in fact learning the know-how for AR, I just had to test it out. 
 
 
-So, when I first started out, little did I know that I had loads more to learn before I could *"jump in"* :sweat_smile:. But I have to admit, this was ~~a good starting point~~ an interesting project to delve into, it taught me about keypoint feature extraction and orb matching.
+So, when I first started out, little did I know that I had loads more to learn before I could *"jump in"* :sweat_smile:. But I have to admit, this was ~~a good starting point~~ an interesting project to delve into, it taught me about keypoint feature extraction and orb matching. 
+
+The next area I have yet to figure out is the 3D model loading; I haven't touched that code yet....
 
 
 
@@ -61,9 +70,9 @@ See this blog entries for an in-depth explanation of the logic behind the code:
 * [Part 2](https://bitesofcode.wordpress.com/2018/09/16/augmented-reality-with-python-and-opencv-part-2/)
 
 
-## Results
+<!-- ## Results
 
-<span style="display:block;text-align:center">![A 3D model of a wolf on a Robotics club logo](output.gif)</span>
+<span style="display:block;text-align:center">![A 3D model of a wolf on a Robotics club logo](output.gif)</span> -->
 
 ## References
 - [RD Milligan](https://rdmilligan.wordpress.com/2015/10/15/augmented-reality-using-opencv-opengl-and-blender/)
