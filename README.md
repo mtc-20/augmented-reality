@@ -1,12 +1,11 @@
 # Augmented Reality
 ***A basic augmented reality card based application in Python. This is a fork of [juangallostra's repo](https://github.com/juangallostra/augmented-reality).***
 
-<div style="text-align:center" alt="A 3D model of a wolf on a Robotics club logo">
-<img src="./output.gif">
+<p align="center">
+<img src="./output.gif" alt="A 3D model of a wolf on a Robotics club logo"></p>
+<p align="center">
+<em style="text-align:center">A sample output</em></p>
 
-
-<em style="text-align:center">A sample output</em>
-</div>
 
 ## A Brief History
 
