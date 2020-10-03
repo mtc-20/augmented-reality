@@ -1,11 +1,20 @@
+'''
+Created on Saturday, 31st October 2019
+@author: mtc-20
+ Coded on VS Code 2019
+------
+Overview:
+ 
+------
+Last Modified: Sat Oct 03 2020
+'''
 
 # Useful links
 # http://www.pygame.org/wiki/OBJFileLoader
-# https://rdmilligan.wordpress.com/2015/10/15/augmented-reality-using-opencv-opengl-and-blender/
-# https://clara.io/library
+
 
 # TODO -> Implement command line arguments (scale, model and object to be projected)
-#      -> Refactor and organize code (proper funcition definition and separation, classes, error handling...)
+# TODO -> Refactor and organize code (proper funcition definition and separation, classes, error handling...)
 
 import argparse
 
@@ -17,7 +26,7 @@ from objloader_simple import *
 
 # Minimum number of matches that have to be found
 # to consider the recognition valid
-MIN_MATCHES = 10  
+MIN_MATCHES = 20 
 
 
 def main():
@@ -30,22 +39,29 @@ def main():
     # create ORB keypoint detector
     orb = cv2.ORB_create()
     # create BFMatcher object based on hamming distance  
-    bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+    bf = cv2.BFMatcher(cv2.NORM_HAMMING2, crossCheck=True)
     # load the reference surface that will be searched in the video stream
     dir_name = os.getcwd()
-    model = cv2.imread(os.path.join(dir_name, 'reference/model.jpg'), 0)
+    model = cv2.imread(os.path.join(dir_name, './../reference/index0_s.jpg'), 0)
+    #model = cv2.flip(model, 1)
     # Compute model keypoints and its descriptors
     kp_model, des_model = orb.detectAndCompute(model, None)
     # Load 3D model from OBJ file
-    obj = OBJ(os.path.join(dir_name, 'models/fox.obj'), swapyz=True)  
+    obj = OBJ(os.path.join(dir_name, './../models/enemy-robot.obj'), swapyz=True)  
     # init video capture
     cap = cv2.VideoCapture(0)
+    # save video capture
+    frame_width = int(cap.get(3))
+    frame_height = int(cap.get(4))
+    #out = cv2.VideoWriter('outpy.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
+    #out = cv2.VideoWriter('output.avi', fourcc, 20.0, (640,480))
 
     while True:
         # read the current frame
         ret, frame = cap.read()
         if not ret:
-            print "Unable to capture video"
+            print ("[ERR] Unable to capture video!")
+            print("[INFO] ")
             return 
         # find and draw the keypoints of the frame
         kp_frame, des_frame = orb.detectAndCompute(frame, None)
@@ -54,10 +70,16 @@ def main():
         # sort them in the order of their distance
         # the lower the distance, the better the match
         matches = sorted(matches, key=lambda x: x.distance)
+        
+        # filter out poor matches
+        good = []
+        for i, m in enumerate(matches):
+            if i < len(matches) - 1 and m.distance < 0.85 * matches[i+1].distance:
+                good.append(m)
 
         # compute Homography if enough matches are found
         if len(matches) > MIN_MATCHES:
-            # differenciate between source points and destination points
+            # differentiate between source points and destination points
             src_pts = np.float32([kp_model[m.queryIdx].pt for m in matches]).reshape(-1, 1, 2)
             dst_pts = np.float32([kp_frame[m.trainIdx].pt for m in matches]).reshape(-1, 1, 2)
             # compute Homography
@@ -84,14 +106,16 @@ def main():
             if args.matches:
                 frame = cv2.drawMatches(model, kp_model, frame, kp_frame, matches[:10], 0, flags=2)
             # show result
+            #out.write(frame)
             cv2.imshow('frame', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
         else:
-            print "Not enough matches found - %d/%d" % (len(matches), MIN_MATCHES)
+            print ("Not enough matches found - %d/%d for %d" % (len(matches),len(good), MIN_MATCHES))
 
     cap.release()
+    #out.release()
     cv2.destroyAllWindows()
     return 0
 
@@ -113,7 +137,7 @@ def render(img, obj, projection, model, color=False):
         dst = cv2.perspectiveTransform(points.reshape(-1, 1, 3), projection)
         imgpts = np.int32(dst)
         if color is False:
-            cv2.fillConvexPoly(img, imgpts, (137, 27, 211))
+            cv2.fillConvexPoly(img, imgpts, (109, 109, 0))
         else:
             color = hex_to_rgb(face[-1])
             color = color[::-1]  # reverse
