@@ -37,7 +37,7 @@ try:
         ret, frame = cap.read()
         # frame = cv2.flip(frame, 1)
         kp_frame, des_frame = orb.detectAndCompute(frame, None)
-        matches = bf.match(des_model,des_frame)
+        matches = bf.match(des_model, des_frame)
         good = []
         for index, m in enumerate(matches):
             if index < len(matches) - 1 and m.distance < 0.75 * matches[index+1].distance:

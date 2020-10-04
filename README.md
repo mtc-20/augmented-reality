@@ -14,12 +14,12 @@ When I first started learning OpenCV/Computer Vision and was looking for ideas t
 
 So, when I first started out, little did I know that I had loads more to learn before I could *"jump in"* :sweat_smile:. But I have to admit, this was ~~a good starting point~~ an interesting project to delve into, it taught me about keypoint feature extraction and orb matching. 
 
-The next area I have yet to figure out is the 3D model loading; I haven't touched that code yet....
+The next area I have yet to figure out is the 3D model loading; I haven't touched that code yet.... I tried playing around with the existing code to load textures and/or materials, with no success, yet....
 
 
 
 **Updates**
--  Code works on Python3 only now
+-  Code works on Python2 and Python3 now
 -  updated parameters in keypoint matching for improved accuracy. And a better filter for good matches. The updates and testing can be found in ```orbmatch.py``` and ```orbmatch_video.py```
 
 
@@ -76,4 +76,4 @@ See this blog entries for an in-depth explanation of the logic behind the code:
 ## References
 - [RD Milligan](https://rdmilligan.wordpress.com/2015/10/15/augmented-reality-using-opencv-opengl-and-blender/)
 - [3D Models](https://clara.io/library)
-- 
+- [Filter]
